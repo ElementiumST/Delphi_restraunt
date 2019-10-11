@@ -9,17 +9,19 @@
     android:orientation="horizontal" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/p2t1_fragment_socket0"
+        android:id="@+id/p1t2_fragment_socket0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/p1t2_fragment_socket1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/p2t1_fragment_socket1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
