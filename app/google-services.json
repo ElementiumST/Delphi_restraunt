@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "156495341193",
+    "firebase_url": "https://delphi-restraunt.firebaseio.com",
+    "project_id": "delphi-restraunt",
+    "storage_bucket": "delphi-restraunt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156495341193:android:97f1cc1a1e4f4103308858",
+        "android_client_info": {
+          "package_name": "com.example.delphirestraunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156495341193-idjuk5qj9ppv16cs0u2atd7kknnbq4q4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.delphirestraunt",
+            "certificate_hash": "149d43da325da612138349e7035489eb68e19173"
+          }
+        },
+        {
+          "client_id": "156495341193-hap5hdaehlk14lleef06809i9m3nu8a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWB4aXn9KamyKMEgtZmaUqgpg7gQUrct8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156495341193-hap5hdaehlk14lleef06809i9m3nu8a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
