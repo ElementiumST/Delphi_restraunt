@@ -13,8 +13,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
-    boolean fr = true;
+    static boolean fr = true;
     public static final long IMAGE_SIZE = 1024*1024*10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

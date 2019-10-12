@@ -46,13 +46,7 @@ public class PostFragment extends Fragment {
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 TextView tv = root.findViewById(R.id.post_text);
                 String title = dataSnapshot.child("title").getValue().toString();
-                if(title.length() > 100) {
-                    title = title.substring(0, 100);
-                    if(title.lastIndexOf(' ') > 0)
-                        title = title.substring(0, title.lastIndexOf(' '));
-                    title = title.concat("...");
-                    tv.setText(title);
-                }
+
                 String refPath = dataSnapshot.child("image").getValue().toString();
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference(refPath);
                 storageReference.getBytes(MainActivity.IMAGE_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
