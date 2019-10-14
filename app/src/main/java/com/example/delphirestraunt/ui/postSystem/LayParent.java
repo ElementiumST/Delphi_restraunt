@@ -19,7 +19,9 @@ public class LayParent extends Fragment {
             postFragments.add(pf);
         }
 
+
     }
+
 
 
 }

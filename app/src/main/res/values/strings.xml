@@ -3,4 +3,11 @@
     <string name="title_home">Домашняя</string>
     <string name="title_menu">Меню</string>
     <string name="title_profile">Профиль</string>
+    <string name="search">Поиск...</string>
+    <string name="filter_time">По времени готовки</string>
+    <string name="filter_type">По типу блюда</string>
+    <string name="filter_ingredients">По составу</string>
+    <string name="back">Принять</string>
+    <string name="cancel">Отмена</string>
+    <string name="none">нет</string>
 </resources>
