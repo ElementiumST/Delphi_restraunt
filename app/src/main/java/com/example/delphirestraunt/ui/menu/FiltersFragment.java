@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.delphirestraunt.R;
 
+import java.util.List;
+
 public class FiltersFragment extends Fragment {
     private String changetTypeFilter;
     private String changetIngFilter;
@@ -39,7 +41,10 @@ public class FiltersFragment extends Fragment {
         mf.getRoot().findViewById(R.id.filter_succes_btn);
         return root;
     }
-    
+    public void loadFilterChange(List<String> filterList) {
+        ChangeFilterFragment changeFilterFragment = new ChangeFilterFragment(filterList );
+    }
+
     public void changeAnimation(View from, View to){
         Animation animationFrom = AnimationUtils.loadAnimation(getContext(), R.anim.animation_hide);
         Animation animationTo = AnimationUtils.loadAnimation(getContext(), R.anim.animation_show);
