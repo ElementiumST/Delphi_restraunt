@@ -47,13 +47,29 @@ public class LaySeparator {
             }
 
             int tl0 = dataSnapshot.child("title").getValue().toString().length();
-
+            //два следующих блока нужны для завершения подгрузки постов
+            //блок, который выполняется если осталось 2 поста
             if(snapshotList.indexOf(dataSnapshot) == snapshotList.size()-2){
+                //динамическое распределение по формам согластно размеру
                 int tl1 = snapshotList.get(i+1).child("title").getValue().toString().length();
-                if(tl0 > tl1)
-                    fragmentTransaction.add(id, new Lay2to1Fragment());
+                if(tl0 > tl1+7)
+                    fragmentTransaction.add(id, new Lay2to1Fragment(
+                            dataSnapshot.child("title").getValue().toString(),
+                            snapshotList.get(i+1).child("title").getValue().toString()
+                    ));
+                else if(tl0 < tl1+7)
+                    fragmentTransaction.add(id, new Lay1to2Fragment(
+                            dataSnapshot.child("title").getValue().toString(),
+                            snapshotList.get(i+1).child("title").getValue().toString()
+                    ));
+                else
+                    fragmentTransaction.add(id, new Lay1to1Fragment(
+                            dataSnapshot.child("title").getValue().toString(),
+                            snapshotList.get(i+1).child("title").getValue().toString()
+                    ));
                 break;
             }
+            //блок, который выполняется если остался 1 пост
             if(snapshotList.indexOf(dataSnapshot) == snapshotList.size()-1){
                 fragmentTransaction.add(id, new Lay1Fragment(dataSnapshot.getKey()));
                 break;
