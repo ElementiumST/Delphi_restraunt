@@ -31,8 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="8dp"
-            android:text="@string/none" />
+            android:layout_marginRight="8dp" />
 
     </RelativeLayout>
 
@@ -54,8 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="8dp"
-            android:text="@string/none" />
+            android:layout_marginRight="8dp" />
 
     </RelativeLayout>
 
@@ -77,8 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="8dp"
-            android:text="@string/none" />
+            android:layout_marginRight="8dp" />
 
     </RelativeLayout>
 

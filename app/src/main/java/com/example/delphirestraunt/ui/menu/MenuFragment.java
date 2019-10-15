@@ -29,14 +29,19 @@ public class MenuFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadFilters();
+        activeIngFilter = "Нет";
+        activeTimeFilter = "Нет";
+        activeTypeFilter = "Нет";
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
+
         return root;
     }
+
     public void loadFilters() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("filters");
         ref.addValueEventListener(new ValueEventListener() {
