@@ -41,8 +41,19 @@ public class FiltersFragment extends Fragment {
         mf.getRoot().findViewById(R.id.filter_succes_btn);
         return root;
     }
-    public void loadFilterChange(List<String> filterList) {
-        ChangeFilterFragment changeFilterFragment = new ChangeFilterFragment(filterList );
+    public void loadFilterChange(String mode) {
+
+        switch (mode){
+            case "type":
+                new ChangeFilterFragment(filters.getTYPE(), changetTypeFilter);
+                break;
+            case "ing":
+                new ChangeFilterFragment(filters.getINGREDIENT(), changetIngFilter);
+                break;
+            case "time":
+                new ChangeFilterFragment(filters.getTIME(), changetTimeFilter);
+                break;
+        }
     }
 
     public void changeAnimation(View from, View to){

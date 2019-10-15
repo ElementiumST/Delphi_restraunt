@@ -1,5 +1,6 @@
 package com.example.delphirestraunt;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             fr = false;
         }
+
     }
 
 }
