@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.delphirestraunt.R;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +29,7 @@ public class MenuFragment extends Fragment {
     private String activeTypeFilter;
     private String activeIngFilter;
     private String activeTimeFilter;
+    View root;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +42,18 @@ public class MenuFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_menu, container, false);
+        root = inflater.inflate(R.layout.fragment_menu, container, false);
+        ImageButton filterBtn = root.findViewById(R.id.menu_filter_button);
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                FiltersFragment ff = new FiltersFragment(filters, activeTypeFilter, activeIngFilter, activeTimeFilter);
+                FrameLayout fl = root.findViewById(R.id.menu_socket);
 
+                fragmentTransaction.add(R.id.menu_socket, ff);
+            }
+        });
         return root;
     }
 

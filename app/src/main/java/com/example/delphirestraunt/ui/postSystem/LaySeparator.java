@@ -51,7 +51,7 @@ public class LaySeparator {
             if(snapshotList.indexOf(dataSnapshot) == snapshotList.size()-2){
                 int tl1 = snapshotList.get(i+1).child("title").getValue().toString().length();
                 if(tl0 > tl1)
-                    fragmentTransaction.add(id, new Lay2to1Fragment());
+                    //fragmentTransaction.add(id, new Lay2to1Fragment());
                 break;
             }
             if(snapshotList.indexOf(dataSnapshot) == snapshotList.size()-1){

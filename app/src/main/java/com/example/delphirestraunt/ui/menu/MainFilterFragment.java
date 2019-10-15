@@ -37,7 +37,6 @@ public class MainFilterFragment extends Fragment {
         timeFilterView.setText(parent.getChangetTimeFilter());
 
         View filterTypeButton = root.findViewById(R.id.filter_type_btn);
-
         View filterIngButton = root.findViewById(R.id.filter_ing_btn);
         View filterTimeButton = root.findViewById(R.id.filter_time_btn);
 

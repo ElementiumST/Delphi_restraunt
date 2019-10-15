@@ -26,6 +26,9 @@ public class ButtonFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_button, container, false);
         button = root.findViewById(R.id.button_main);
+        if(isActive) {
+
+        }
         return root;
     }
 

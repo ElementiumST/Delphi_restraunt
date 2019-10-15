@@ -32,7 +32,8 @@ public class ChangeFilterFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_filter_change, container, false);
         LinearLayout ll = root.findViewById(R.id.filter_change_lay);
         for(String s : filterList){
-
+            boolean b = s.contains(activeFilter);
+            ButtonFragment bf = new ButtonFragment(s, b);
         }
         return root;
     }
