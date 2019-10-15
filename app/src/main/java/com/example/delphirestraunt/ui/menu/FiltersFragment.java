@@ -1,9 +1,12 @@
 package com.example.delphirestraunt.ui.menu;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,36 +34,38 @@ public class FiltersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_filter, container, false);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        MainFilterFragment mf = new MainFilterFragment();
+        MainFilterFragment mf = new MainFilterFragment(this);
         ft.add(R.id.filter_socket, mf);
         mf.getRoot().findViewById(R.id.filter_succes_btn);
         return root;
+    }
+    
+    public void changeAnimation(View from, View to){
+        Animation animationFrom = AnimationUtils.loadAnimation(getContext(), R.anim.animation_hide);
+        Animation animationTo = AnimationUtils.loadAnimation(getContext(), R.anim.animation_show);
+        from.startAnimation(animationFrom);
+        to.startAnimation(animationTo);
+
     }
 
     public String getChangetTypeFilter() {
         return changetTypeFilter;
     }
-
     public void setChangetTypeFilter(String changetTypeFilter) {
         this.changetTypeFilter = changetTypeFilter;
     }
-
     public String getChangetIngFilter() {
         return changetIngFilter;
     }
-
     public void setChangetIngFilter(String changetIngFilter) {
         this.changetIngFilter = changetIngFilter;
     }
-
     public String getChangetTimeFilter() {
         return changetTimeFilter;
     }
-
     public void setChangetTimeFilter(String changetTimeFilter) {
         this.changetTimeFilter = changetTimeFilter;
     }
-
     public Filters getFilters() {
         return filters;
     }
