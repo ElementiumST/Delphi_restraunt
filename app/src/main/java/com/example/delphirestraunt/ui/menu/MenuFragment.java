@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class MenuFragment extends Fragment {
+    private MenuFragment menuFragment;
     private Filters filters;
     private String activeTypeFilter;
     private String activeIngFilter;
@@ -41,17 +42,18 @@ public class MenuFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        menuFragment = this;
         root = inflater.inflate(R.layout.fragment_menu, container, false);
         ImageButton filterBtn = root.findViewById(R.id.menu_filter_button);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                FiltersFragment ff = new FiltersFragment(filters, activeTypeFilter, activeIngFilter, activeTimeFilter);
+                FiltersFragment ff = new FiltersFragment(menuFragment, filters, activeTypeFilter, activeIngFilter, activeTimeFilter);
                 FrameLayout fl = root.findViewById(R.id.menu_socket);
 
                 fragmentTransaction.add(R.id.menu_socket, ff);
+                fragmentTransaction.commit();
             }
         });
         return root;
@@ -76,6 +78,13 @@ public class MenuFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+    }
+
     public List<String> toList(Iterable<DataSnapshot> dataSnapshots) {
         List<String> output = new ArrayList<>();
         for(DataSnapshot dataSnapshot : dataSnapshots) {

@@ -1,6 +1,5 @@
 package com.example.delphirestraunt.ui.menu;
 
-import android.animation.Animator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +9,24 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.delphirestraunt.R;
 
-import java.util.List;
-
 public class FiltersFragment extends Fragment {
-    private String changetTypeFilter;
-    private String changetIngFilter;
-    private String changetTimeFilter;
+    private MenuFragment parent;
+    private String changeTypeFilter;
+    private String changeIngFilter;
+    private String changeTimeFilter;
     private Filters filters;
     View root;
-    public FiltersFragment(Filters filters, String changetTypeFilter, String changetIngFilter, String changetTimeFilter){
+    public FiltersFragment(MenuFragment parent, Filters filters, String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
+        this.parent = parent;
         this.filters = filters;
-        this.changetIngFilter= changetIngFilter;
-        this.changetTimeFilter = changetTimeFilter;
-        this.changetTypeFilter = changetTypeFilter;
+        this.changeIngFilter = changeIngFilter;
+        this.changeTimeFilter = changeTimeFilter;
+        this.changeTypeFilter = changeTypeFilter;
     }
 
     @Nullable
@@ -38,20 +36,20 @@ public class FiltersFragment extends Fragment {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         MainFilterFragment mf = new MainFilterFragment(this);
         ft.add(R.id.filter_socket, mf);
-        mf.getRoot().findViewById(R.id.filter_succes_btn);
+        ft.commit();
         return root;
     }
     public void loadFilterChange(String mode) {
 
         switch (mode){
             case "type":
-                new ChangeFilterFragment(filters.getTYPE(), changetTypeFilter);
+                new ChangeFilterFragment(filters.getTYPE(), changeTypeFilter);
                 break;
             case "ing":
-                new ChangeFilterFragment(filters.getINGREDIENT(), changetIngFilter);
+                new ChangeFilterFragment(filters.getINGREDIENT(), changeIngFilter);
                 break;
             case "time":
-                new ChangeFilterFragment(filters.getTIME(), changetTimeFilter);
+                new ChangeFilterFragment(filters.getTIME(), changeTimeFilter);
                 break;
         }
     }
@@ -63,26 +61,37 @@ public class FiltersFragment extends Fragment {
         to.startAnimation(animationTo);
 
     }
+    public void succesFilters(String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
+        if(changeIngFilter != null && filters.getINGREDIENT().contains(changeIngFilter))
+            parent.setActiveIngFilter(changeIngFilter);
+        if(changeTimeFilter != null && filters.getTIME().contains(changeTimeFilter))
+            parent.setActiveTimeFilter(changeTimeFilter);
+        if(changeTypeFilter != null &&filters.getTYPE().contains(changeTypeFilter))
+            parent.setActiveTypeFilter(changeTypeFilter);
+    }
 
-    public String getChangetTypeFilter() {
-        return changetTypeFilter;
+    public String getChangeTypeFilter() {
+        return changeTypeFilter;
     }
-    public void setChangetTypeFilter(String changetTypeFilter) {
-        this.changetTypeFilter = changetTypeFilter;
+    public void setChangeTypeFilter(String changeTypeFilter) {
+        this.changeTypeFilter = changeTypeFilter;
     }
-    public String getChangetIngFilter() {
-        return changetIngFilter;
+    public String getChangeIngFilter() {
+        return changeIngFilter;
     }
-    public void setChangetIngFilter(String changetIngFilter) {
-        this.changetIngFilter = changetIngFilter;
+    public void setChangeIngFilter(String changeIngFilter) {
+        this.changeIngFilter = changeIngFilter;
     }
-    public String getChangetTimeFilter() {
-        return changetTimeFilter;
+    public String getChangeTimeFilter() {
+        return changeTimeFilter;
     }
-    public void setChangetTimeFilter(String changetTimeFilter) {
-        this.changetTimeFilter = changetTimeFilter;
+    public void setChangeTimeFilter(String changeTimeFilter) {
+        this.changeTimeFilter = changeTimeFilter;
     }
     public Filters getFilters() {
         return filters;
+    }
+    public MenuFragment getParent() {
+        return parent;
     }
 }
