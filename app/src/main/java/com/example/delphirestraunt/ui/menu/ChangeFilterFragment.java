@@ -18,13 +18,15 @@ import java.util.List;
 public class ChangeFilterFragment extends Fragment {
     private List<String> filterList;
     private String activeFilter;
+    FiltersFragment parent;
     View root;
-    public ChangeFilterFragment(List<String> filterList, String activeFilter) {
-    this.filterList = filterList;
-    if(filterList.contains(activeFilter))
-        this.activeFilter=activeFilter;
-    else activeFilter = null;
-    }
+    public ChangeFilterFragment(FiltersFragment parent, List<String> filterList, String activeFilter) {
+        this.parent = parent;
+        this.filterList = filterList;
+        if(filterList.contains(activeFilter))
+            this.activeFilter=activeFilter;
+        else activeFilter = null;
+        }
 
     @Nullable
     @Override

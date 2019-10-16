@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +36,12 @@ public class MainFilterFragment extends Fragment {
         timeFilterView.setText(parent.getChangeTimeFilter());
 
         View filterTypeButton = root.findViewById(R.id.filter_type_btn);
+        filterTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parent.changeStart("type");
+            }
+        });
         View filterIngButton = root.findViewById(R.id.filter_ing_btn);
         View filterTimeButton = root.findViewById(R.id.filter_time_btn);
 
@@ -54,11 +59,11 @@ public class MainFilterFragment extends Fragment {
                 close();
             }
         });
-        Button filterSuccesButton = root.findViewById(R.id.filter_succes_btn);
-        filterSuccesButton.setOnClickListener(new View.OnClickListener() {
+        Button filterSuccessButton = root.findViewById(R.id.filter_succes_btn);
+        filterSuccessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.succesFilters(typeFilterView.getText().toString(), ingFilterView.getText().toString(), timeFilterView.getText().toString());
+                parent.successFilters(typeFilterView.getText().toString(), ingFilterView.getText().toString(), timeFilterView.getText().toString());
                 close();
             }
         });

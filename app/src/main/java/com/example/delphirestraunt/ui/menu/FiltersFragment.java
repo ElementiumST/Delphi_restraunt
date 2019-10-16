@@ -1,6 +1,7 @@
 package com.example.delphirestraunt.ui.menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.delphirestraunt.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class FiltersFragment extends Fragment {
+    private MainFilterFragment child;
     private MenuFragment parent;
     private String changeTypeFilter;
     private String changeIngFilter;
@@ -34,24 +40,42 @@ public class FiltersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_filter, container, false);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        MainFilterFragment mf = new MainFilterFragment(this);
-        ft.add(R.id.filter_socket, mf);
+        child = new MainFilterFragment(this);
+
+        ft.add(R.id.filter_socket, child);
         ft.commit();
         return root;
     }
-    public void loadFilterChange(String mode) {
-
-        switch (mode){
+    public void changeStart(String mode){
+        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+        List<String> filterList = new ArrayList<>();
+        String activeFilter = "";
+        switch (mode) {
             case "type":
-                new ChangeFilterFragment(filters.getTYPE(), changeTypeFilter);
+                activeFilter = changeTypeFilter;
+                filterList = filters.getTYPE();
                 break;
-            case "ing":
-                new ChangeFilterFragment(filters.getINGREDIENT(), changeIngFilter);
+            case "ingredient":
+                activeFilter = changeIngFilter;
+                filterList = filters.getINGREDIENT();
                 break;
             case "time":
-                new ChangeFilterFragment(filters.getTIME(), changeTimeFilter);
+                activeFilter = changeTimeFilter;
+                filterList = filters.getTIME();
+                break;
+            default:
+
+                Log.e("FilterError", "Wrong mode select");
                 break;
         }
+        ChangeFilterFragment changeFilterFragment = new ChangeFilterFragment(this, filterList, activeFilter);
+        ft1.add(R.id.filter_socket, changeFilterFragment);
+        ft1.commit();
+        FragmentTransaction ft2 = getFragmentManager().beginTransaction();
+        changeAnimation(Objects.requireNonNull(child.getView()),
+                Objects.requireNonNull(changeFilterFragment.getView()));
+        ft2.remove(child);
+        ft2.commit();
     }
 
     public void changeAnimation(View from, View to){
@@ -61,8 +85,8 @@ public class FiltersFragment extends Fragment {
         to.startAnimation(animationTo);
 
     }
-    public void succesFilters(String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
-        if(changeIngFilter != null && filters.getINGREDIENT().contains(changeIngFilter))
+    public void successFilters(String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
+        if(changeIngFilter != null || filters.getINGREDIENT().contains(changeIngFilter))
             parent.setActiveIngFilter(changeIngFilter);
         if(changeTimeFilter != null && filters.getTIME().contains(changeTimeFilter))
             parent.setActiveTimeFilter(changeTimeFilter);
