@@ -8,22 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:156495341193:android:97f1cc1a1e4f4103308858",
+        "mobilesdk_app_id": "1:156495341193:android:230869543ce6caaa308858",
         "android_client_info": {
           "package_name": "com.example.delphirestraunt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "156495341193-bqbbduci6k5kt9ut3mu14n9g8msann49.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.delphirestraunt",
-            "certificate_hash": "fc5b8c6ec01da02b42083a2c2ebe4b171b2d527e"
-          }
-        },
-        {
-          "client_id": "156495341193-idjuk5qj9ppv16cs0u2atd7kknnbq4q4.apps.googleusercontent.com",
+          "client_id": "156495341193-emfgjj3hcb1cq1v91sqk6qkmvs343igj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.delphirestraunt",

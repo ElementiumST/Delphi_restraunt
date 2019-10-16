@@ -7,9 +7,13 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.NavigationMenu;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -38,6 +42,19 @@ public class MainActivity extends AppCompatActivity {
         View nm =  findViewById(R.id.nav_host_fragment);
         if(fr) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().getReference().addValueEventListener(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.d("TEST", "LOGIN");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    }
+            );
             fr = false;
         }
 
