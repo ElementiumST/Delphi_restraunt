@@ -14,6 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.delphirestraunt.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +27,14 @@ import java.util.Objects;
 public class FiltersFragment extends Fragment {
     private MainFilterFragment child;
     private MenuFragment parent;
+    private Filters filters;
     private String changeTypeFilter;
     private String changeIngFilter;
     private String changeTimeFilter;
-    private Filters filters;
     View root;
-    public FiltersFragment(MenuFragment parent, Filters filters, String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
+    public FiltersFragment(MenuFragment parent, String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
+        filters = new Filters();
         this.parent = parent;
-        this.filters = filters;
         this.changeIngFilter = changeIngFilter;
         this.changeTimeFilter = changeTimeFilter;
         this.changeTypeFilter = changeTypeFilter;
@@ -39,6 +44,9 @@ public class FiltersFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_filter, container, false);
+        loadFilters("ingredients");
+        loadFilters("time");
+        loadFilters("type");
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         child = new MainFilterFragment(this);
 
@@ -46,8 +54,10 @@ public class FiltersFragment extends Fragment {
         ft.commit();
         return root;
     }
+
     public void changeStart(String mode){
-        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.hide(child);
         List<String> filterList = new ArrayList<>();
         String activeFilter = "";
         switch (mode) {
@@ -69,31 +79,56 @@ public class FiltersFragment extends Fragment {
                 break;
         }
         ChangeFilterFragment changeFilterFragment = new ChangeFilterFragment(this, filterList, activeFilter);
-        ft1.add(R.id.filter_socket, changeFilterFragment);
-        ft1.commit();
-        FragmentTransaction ft2 = getFragmentManager().beginTransaction();
-        changeAnimation(Objects.requireNonNull(child.getView()),
-                Objects.requireNonNull(changeFilterFragment.getView()));
-        ft2.remove(child);
-        ft2.commit();
+        ft.add(R.id.filter_socket, changeFilterFragment);
+        ft.remove(child);
+        ft.commit();
     }
 
-    public void changeAnimation(View from, View to){
-        Animation animationFrom = AnimationUtils.loadAnimation(getContext(), R.anim.animation_hide);
-        Animation animationTo = AnimationUtils.loadAnimation(getContext(), R.anim.animation_show);
-        from.startAnimation(animationFrom);
-        to.startAnimation(animationTo);
-
-    }
     public void successFilters(String changeTypeFilter, String changeIngFilter, String changeTimeFilter){
         if(changeIngFilter != null || filters.getINGREDIENT().contains(changeIngFilter))
             parent.setActiveIngFilter(changeIngFilter);
         if(changeTimeFilter != null && filters.getTIME().contains(changeTimeFilter))
             parent.setActiveTimeFilter(changeTimeFilter);
-        if(changeTypeFilter != null &&filters.getTYPE().contains(changeTypeFilter))
+        if(changeTypeFilter != null && filters.getTYPE().contains(changeTypeFilter))
             parent.setActiveTypeFilter(changeTypeFilter);
     }
 
+
+    public void loadFilters(String child) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("filters");
+        ref.child(child).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> output = new ArrayList<>();
+                for(DataSnapshot childSnap : dataSnapshot.getChildren()) {
+                    String out = childSnap.getValue().toString();
+                    output.add(out);
+                }
+                switch (child) {
+                    case "type":
+                        filters.setTYPE(output);
+                        break;
+                    case "ingredients":
+                        filters.setINGREDIENT(output);
+                        break;
+                    case "time":
+                        filters.setTIME(output);
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.i(child, databaseError.getMessage());
+            }
+        });
+    }
+    public void setFilters(Filters filters) {
+        this.filters = filters;
+    }
+    public Filters getFilters() {
+        return filters;
+    }
     public String getChangeTypeFilter() {
         return changeTypeFilter;
     }
@@ -111,9 +146,6 @@ public class FiltersFragment extends Fragment {
     }
     public void setChangeTimeFilter(String changeTimeFilter) {
         this.changeTimeFilter = changeTimeFilter;
-    }
-    public Filters getFilters() {
-        return filters;
     }
     public MenuFragment getParent() {
         return parent;

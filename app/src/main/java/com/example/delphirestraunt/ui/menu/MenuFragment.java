@@ -1,6 +1,7 @@
 package com.example.delphirestraunt.ui.menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,32 +27,30 @@ import java.util.List;
 
 public class MenuFragment extends Fragment {
     private MenuFragment menuFragment;
-    private Filters filters;
     private String activeTypeFilter;
     private String activeIngFilter;
     private String activeTimeFilter;
     View root;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loadFilters();
         activeIngFilter = "Нет";
         activeTimeFilter = "Нет";
         activeTypeFilter = "Нет";
+        super.onCreate(savedInstanceState);
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         menuFragment = this;
+
         root = inflater.inflate(R.layout.fragment_menu, container, false);
         ImageButton filterBtn = root.findViewById(R.id.menu_filter_button);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                FiltersFragment ff = new FiltersFragment(menuFragment, filters, activeTypeFilter, activeIngFilter, activeTimeFilter);
-                FrameLayout fl = root.findViewById(R.id.menu_socket);
-
+                FiltersFragment ff = new FiltersFragment(menuFragment, activeTypeFilter, activeIngFilter, activeTimeFilter);
                 fragmentTransaction.add(R.id.menu_socket, ff);
                 fragmentTransaction.commit();
             }
@@ -59,25 +58,6 @@ public class MenuFragment extends Fragment {
         return root;
     }
 
-    public void loadFilters() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("filters");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> typeList = dataSnapshot.child("type").getChildren();
-                filters.setTYPE(toList(typeList));
-                Iterable<DataSnapshot> timeList = dataSnapshot.child("time").getChildren();
-                filters.setTIME(toList(timeList));
-                Iterable<DataSnapshot> ingredientsList = dataSnapshot.child("ingredients").getChildren();
-                filters.setINGREDIENT(toList(ingredientsList));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     @Override
     public void onResume() {
@@ -85,13 +65,7 @@ public class MenuFragment extends Fragment {
         super.onResume();
     }
 
-    public List<String> toList(Iterable<DataSnapshot> dataSnapshots) {
-        List<String> output = new ArrayList<>();
-        for(DataSnapshot dataSnapshot : dataSnapshots) {
-            output.add(dataSnapshot.getValue().toString());
-        }
-        return output;
-    }
+
 
     public String getActiveTypeFilter() {
         return activeTypeFilter;
@@ -116,4 +90,6 @@ public class MenuFragment extends Fragment {
     public void setActiveTimeFilter(String activeTimeFilter) {
         this.activeTimeFilter = activeTimeFilter;
     }
+
+
 }
